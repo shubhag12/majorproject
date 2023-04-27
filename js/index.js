@@ -71,38 +71,46 @@ var dhruv = 18;
   }
   
   if (typeof web3 !== "undefined") {
-    console.log(typeof web3);
     web3 = new Web3(web3.currentProvider);
-    
   } else {
-    console.log(web3);
     web3 = new Web3(new Web3.providers.HttpProviders("http://127.0.0.1:7545"));
   }
-window.ethereum.enable();
-web3.eth.getAccounts().then(function (result) {
-    console.log(result)
-    account0 = result[0];
-    console.log(account0);
-  });
-  console.log(account0);
-  
-  // web3.eth.requestAccounts().then(console.log);
-  console.log('shubh line 81')
-  // setTimeout(function delay() {
-    async function contractAccess(){
+async function accountAccess(){
+    try{
+      await window.ethereum.enable()
+      const result  = await web3.eth.getAccounts()
+      console.log(result)
+      account0 = result[0];
       console.log(account0);
       AssetTrackerContract = await new web3.eth.Contract(
-        console.log(account0),
         contractABI,
         contractAddress,
         { from: account0 }
       );
+    }catch(err){
+      console.log(err);
     }
-    contractAccess();
-    console.log(AssetTrackerContract);
+}
+accountAccess();
+// console.log(account0);
+  
+  // web3.eth.requestAccounts().then(console.log);
+  console.log('shubh line 81')
+  // setTimeout(function delay() {
+  // async function contractAccess(){
+  //     console.log(account0);
+  //     AssetTrackerContract = await new web3.eth.Contract(
+  //       contractABI,
+  //       contractAddress,
+  //       { from: account0 }
+  //     );
+  //   }
+  //   contractAccess();
+    // console.log(AssetTrackerContract);
   // }, 1000);
   
-  console.log(AssetTrackerContract);
+  // console.log(AssetTrackerContract);
   setTimeout(function delay() {
+    console.log(account0);
     Object.freeze(account0);
   }, 4000);
